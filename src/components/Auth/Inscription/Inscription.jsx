@@ -110,6 +110,13 @@ const Inscription = () => {
           <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
         </div>
 
+                    <div className='Type_inscription'> <select>
+                      <option value="" disabled selected>Que vous etes vous ?</option>
+                <option value="donneur">Donneur</option>
+                <option value="beneficiaire">Bénéficiaire</option>
+              </select>
+                    </div>
+
         <button type="submit" className="login-button">S'inscrire</button>
 
         {message.text && (
