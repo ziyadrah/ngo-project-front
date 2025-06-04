@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import API from "../../api";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
+import "./MotDePasseOublie";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -71,7 +72,7 @@ export default function Login() {
         </div>
 
         <div className="forgot-password">
-          <a href="#">Mot de passe oublié ?</a>
+          <a href="/MotDePasseOublie">Mot de passe oublié ?</a>
         </div>
 
         <button type="submit" className="login-button">Se connecter</button>
@@ -79,7 +80,7 @@ export default function Login() {
         {error && <div className="error-message">{error}</div>}
 
         <div className="signup-link">
-          Pas de compte ? <a href="/register">S'inscrire</a>
+          Pas de compte ? <a href="/Register">S'inscrire</a>
         </div>
       </form>
     </div>
