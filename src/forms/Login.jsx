@@ -24,7 +24,7 @@ export default function Login() {
       const res = await API.post("/users/login", form);
       localStorage.setItem("token", res.data.access_token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-
+      localStorage.setItem("role", res.data.user.role);
       const role = res.data.user.role.toLowerCase();
       if (role === "association") navigate("/dashboard/association");
       else if (role === "volontaire") navigate("/dashboard/volontaire");

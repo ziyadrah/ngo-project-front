@@ -7,5 +7,11 @@ const API = axios.create({
   },
 });
 
+
+export const getAssociations = () => API.get("/associations/");
+export const getDemandes = () => API.get("/demandes/");
+export const engagerTache = (demandeId) => API.post(`/taches/engager/${demandeId}`);
+export const getMesTaches = () => API.get("/taches/mes-taches");
+
 export default API;
 

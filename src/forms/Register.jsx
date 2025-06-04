@@ -3,7 +3,9 @@ import API from "../../api";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const [form, setForm] = useState({ nom: "", prenom: "", email: "", password: "", role: "association" });
+  const [form, setForm] = useState({ nom: "", prenom: "", email: "", password: "", role: "association",association_nom: "",
+  latitude: null,
+  longitude: null });
   const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -11,10 +13,12 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Form data:", form);
       await API.post("/users/register", form);
-      alert("Compte créé avec succès !");
+      alert("Compte cree avec succes !");
       navigate("/login");
     } catch (error) {
+      console.error("Erreur:", error.response?.data || error.message);
       alert("Erreur d'inscription");
     }
   };
@@ -31,6 +35,9 @@ export default function Register() {
         <option value="volontaire">Volontaire</option>
         <option value="sinistre">Sinistré</option>
       </select>
+         {form.role === "association" && (
+        <input name="association_nom" placeholder="Nom de l'association" onChange={handleChange} />
+      )}
       <button type="submit">S'inscrire</button>
     </form>
   );
