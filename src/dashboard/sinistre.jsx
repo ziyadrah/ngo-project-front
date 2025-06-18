@@ -13,6 +13,12 @@ const Sinistre = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+
+      console.log("Token in Sinistre:", token);
+    if (!token) {
+    alert("Token manquante. Veuillez vous connecter.");
+    return;
+  }
     axios
       .get("http://127.0.0.1:8000/associations/", {
         headers: {
@@ -21,7 +27,7 @@ const Sinistre = () => {
       })
       .then((res) => setAssociations(res.data))
       .catch((err) =>
-        console.error("Erreur de chargement des associations:", err)
+        console.error("Erreur de chargement ", err)
       );
   }, []);
 
@@ -29,8 +35,10 @@ const Sinistre = () => {
     e.preventDefault();
     try {
       console.log("token :", token);
+      
       await axios.post(
         "http://127.0.0.1:8000/demandes/",
+      
         {
           type_aide: typeAide,
           description: description,
@@ -97,7 +105,7 @@ const Sinistre = () => {
               onChange={(e) => setTypeAide(e.target.value)}
               required
             >
-              <option value="">-- Sélectionner --</option>
+              <option value="">-- Selectionner --</option>
               <option value="Nourriture">Nourriture</option>
               <option value="Vêtements">Vêtements</option>
               <option value="Médicaments">Médicaments</option>

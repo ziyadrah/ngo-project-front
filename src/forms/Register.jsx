@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import API from '../../api'; 
 import './Login.css';
 
 export default function Register() {
-  const [form, setForm] = useState({ nom: "", prenom: "", email: "", password: "", role: "association",association_nom: "",
-  latitude: null,
-  longitude: null });
-  const navigate = useNavigate();
-const Inscription = () => {
   const [formData, setFormData] = useState({
     nom: '',
+    prenom: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    role: '',
+    association_nom: '',
+    latitude: null,
+    longitude: null,
   });
+
   const [message, setMessage] = useState({ text: '', type: '' });
+  const navigate = useNavigate();
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,22 +25,14 @@ const Inscription = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      console.log("Form data:", form);
-      await API.post("/users/register", form);
-      alert("Compte cree avec succes !");
-      navigate("/login");
-    } catch (error) {
-      console.error("Erreur:", error.response?.data || error.message);
-      alert("Erreur d'inscription");
 
     if (!validateEmail(formData.email)) {
       setMessage({ text: 'Veuillez entrer une adresse email valide', type: 'error' });
@@ -50,36 +44,21 @@ const Inscription = () => {
       return;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      setMessage({ text: 'Les mots de passe ne correspondent pas', type: 'error' });
-      return;
-    }
+    try {
+      console.log('Form data:', formData);
+      await API.post('/users/register', formData);
+      setMessage({ text: 'Inscription réussie ! Redirection...', type: 'success' });
 
-    setTimeout(() => {
-      setMessage({ text: 'Inscription réussie! Redirection...', type: 'success' });
       setTimeout(() => {
-        alert('Compte créé avec succès!');
+        navigate('/login');
       }, 2000);
-    }, 1000);
+    } catch (error) {
+      console.error('Erreur:', error.response?.data || error.message);
+      setMessage({ text: "Erreur d'inscription", type: 'error' });
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Inscription</h2>
-      <input name="nom" placeholder="Nom" onChange={handleChange} required />
-      <input name="prenom" placeholder="Prénom" onChange={handleChange} required />
-      <input name="email" placeholder="Email" type="email" onChange={handleChange} required />
-      <input name="password" placeholder="Mot de passe" type="password" onChange={handleChange} required />
-      <select name="role" onChange={handleChange}>
-        <option value="association">Association</option>
-        <option value="volontaire">Volontaire</option>
-        <option value="sinistre">Sinistré</option>
-      </select>
-         {form.role === "association" && (
-        <input name="association_nom" placeholder="Nom de l'association" onChange={handleChange} />
-      )}
-      <button type="submit">S'inscrire</button>
-    </form>
     <div className="login-container">
       <div className="login-header">
         <h1>Créer un compte</h1>
@@ -90,68 +69,78 @@ const Inscription = () => {
         <div className="input-group">
           <input
             type="text"
-            id="nom"
             name="nom"
             value={formData.nom}
             onChange={handleChange}
-            placeholder=" "
+            placeholder=""
             required
           />
-          <label htmlFor="nom">Nom complet</label>
+          <label>Nom</label>
+        </div>
+
+        <div className="input-group">
+          <input
+            type="text"
+            name="prenom"
+            value={formData.prenom}
+            onChange={handleChange}
+            placeholder=""
+            required
+          />
+          <label>Prénom</label>
         </div>
 
         <div className="input-group">
           <input
             type="email"
-            id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            placeholder=" "
+            placeholder=""
             required
           />
-          <label htmlFor="email">Adresse Email</label>
+          <label>Email</label>
         </div>
 
         <div className="input-group">
           <input
             type="password"
-            id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder=" "
+            placeholder=""
             required
           />
-          <label htmlFor="password">Mot de passe</label>
+          <label>Mot de passe</label>
         </div>
 
-        <div className="input-group">
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            placeholder=" "
-            required
-          />
-          <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+        <div className="Type_inscription">
+          <select name="role" value={formData.role} onChange={handleChange} required>
+            <option value="" disabled>Que vous êtes vous ?</option>
+            <option value="association">Association</option>
+            <option value="volontaire">Volontaire</option>
+            <option value="sinistre">Sinistré</option>
+          </select>
         </div>
 
-                    <div className='Type_inscription'> <select required>
-                      <option value="" disabled selected>Que vous etes vous ?</option>
-                <option value="donneur">Donneur</option>
-                <option value="beneficiaire">Bénéficiaire</option>
-              </select>
-                    </div>
+        {formData.role === 'association' && (
+          <div className="input-group">
+            <input
+              type="text"
+              name="association_nom"
+              value={formData.association_nom}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
+            <label>Nom de l'association</label>
+          </div>
+        )}
 
         <button type="submit" className="login-button">S'inscrire</button>
 
         {message.text && (
-          <div className={`${message.type}-message`}>
-            {message.text}
-          </div>
+          <div className={`${message.type}-message`}>{message.text}</div>
         )}
 
         <div className="signup-link">
@@ -160,6 +149,4 @@ const Inscription = () => {
       </form>
     </div>
   );
-};
-
-export default Inscription;
+}
