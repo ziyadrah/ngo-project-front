@@ -7,8 +7,8 @@ const Nav_bar = () => {
   return (
     <nav className="nav-container">
       <div className="nav-title">
-        <h2>جمعية الرفق بالحيوان والمحافظة على الطبيعة</h2>
-        <p>SOCIETE PROTECTRICE DES ANIMAUX ET DE LA NATURE</p>
+        <h2>جمعية الوفاق للمساعدات الإنسانية</h2>
+        <p>Société d'aide humanitaire Al-Wefaq</p>
       </div>
       
       <div className="contact-section">
@@ -25,8 +25,8 @@ const Nav_bar = () => {
       </ul>
 
       <div className="info-section">
-        <h3>Protection des animaux</h3>
-        <p>La SPANA dispose de cinq centres...</p>
+        <h3>Notre société</h3>
+        <p>Notre société dispose de cinq centres...</p>
         <Link to="/read-more" className="read-more">LIRE LA SUITE</Link>
       </div>
     </nav>
