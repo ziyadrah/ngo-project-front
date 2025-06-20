@@ -14,7 +14,7 @@ const Sinistre = () => {
 
   useEffect(() => {
 
-      console.log("Token in Sinistre:", token);
+    console.log("Token in Sinistre:", token);
     if (!token) {
     alert("Token manquante. Veuillez vous connecter.");
     return;
@@ -66,6 +66,8 @@ const Sinistre = () => {
 
     }
   };
+  <pre>{JSON.stringify(associations, null, 2)}</pre>
+
 
   return (
     <>
@@ -86,7 +88,9 @@ const Sinistre = () => {
             {asso.location && (
               <p><strong>Localisation:</strong> {asso.location}</p>
             )}
-            <p><strong>Email:</strong> {asso.user.email}</p>
+            {/* <p><strong>Email:</strong> {asso.user.email}</p> */}
+            <p><strong>Email:</strong> {asso.email}</p>
+
           </div>
         ))}
       </div>
