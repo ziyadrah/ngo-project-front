@@ -37,6 +37,6 @@ Access their dedicated dashboard
 
 ##  Authors
 
-- **Karima**: Backend development (FastAPI) & Frontend (React.js)  
+- **Karima Bouzalmat**: Backend development (FastAPI) & Frontend (React.js)  
 - **Abdullah**: Frontend development (React.js)  
 - **Ziyad**: DevOps & deployment
