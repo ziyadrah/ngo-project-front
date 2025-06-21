@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../../api'; 
 import './Login.css';
+import NavBarSimple from '../Acceuil/NavBarSimple';  // ✅ Chemin correct si le fichier est là
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -45,7 +46,6 @@ export default function Register() {
     }
 
     try {
-      console.log('Form data:', formData);
       await API.post('/users/register', formData);
       setMessage({ text: 'Inscription réussie ! Redirection...', type: 'success' });
 
@@ -59,94 +59,99 @@ export default function Register() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-header">
-        <h1>Créer un compte</h1>
-        <p>Rejoignez notre communauté</p>
-      </div>
+    <>
+      {/* ✅ Affiche la nav-bar simple ici */}
+      <NavBarSimple />
 
-      <form onSubmit={handleSubmit}>
-        <div className="input-group">
-          <input
-            type="text"
-            name="nom"
-            value={formData.nom}
-            onChange={handleChange}
-            placeholder=""
-            required
-          />
-          <label>Nom</label>
+      <div className="login-container">
+        <div className="login-header">
+          <h1>Créer un compte</h1>
+          <p>Rejoignez notre communauté</p>
         </div>
 
-        <div className="input-group">
-          <input
-            type="text"
-            name="prenom"
-            value={formData.prenom}
-            onChange={handleChange}
-            placeholder=""
-            required
-          />
-          <label>Prénom</label>
-        </div>
-
-        <div className="input-group">
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder=""
-            required
-          />
-          <label>Email</label>
-        </div>
-
-        <div className="input-group">
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder=""
-            required
-          />
-          <label>Mot de passe</label>
-        </div>
-
-        <div className="Type_inscription">
-          <select name="role" value={formData.role} onChange={handleChange} required>
-            <option value="" disabled>Que vous êtes vous ?</option>
-            <option value="association">Association</option>
-            <option value="volontaire">Volontaire</option>
-            <option value="sinistre">Sinistré</option>
-          </select>
-        </div>
-
-        {formData.role === 'association' && (
+        <form onSubmit={handleSubmit}>
           <div className="input-group">
             <input
               type="text"
-              name="association_nom"
-              value={formData.association_nom}
+              name="nom"
+              value={formData.nom}
               onChange={handleChange}
               placeholder=""
               required
             />
-            <label>Nom de l'association</label>
+            <label>Nom</label>
           </div>
-        )}
 
-        <button type="submit" className="login-button">S'inscrire</button>
+          <div className="input-group">
+            <input
+              type="text"
+              name="prenom"
+              value={formData.prenom}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
+            <label>Prénom</label>
+          </div>
 
-        {message.text && (
-          <div className={`${message.type}-message`}>{message.text}</div>
-        )}
+          <div className="input-group">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
+            <label>Email</label>
+          </div>
 
-        <div className="signup-link">
-          Déjà un compte ? <Link to="/login">Se connecter</Link>
-        </div>
-      </form>
-    </div>
+          <div className="input-group">
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
+            <label>Mot de passe</label>
+          </div>
+
+          <div className="Type_inscription">
+            <select name="role" value={formData.role} onChange={handleChange} required>
+              <option value="" disabled>Que vous êtes vous ?</option>
+              <option value="association">Association</option>
+              <option value="volontaire">Volontaire</option>
+              <option value="sinistre">Sinistré</option>
+            </select>
+          </div>
+
+          {formData.role === 'association' && (
+            <div className="input-group">
+              <input
+                type="text"
+                name="association_nom"
+                value={formData.association_nom}
+                onChange={handleChange}
+                placeholder=""
+                required
+              />
+              <label>Nom de l'association</label>
+            </div>
+          )}
+
+          <button type="submit" className="login-button">S'inscrire</button>
+
+          {message.text && (
+            <div className={`${message.type}-message`}>{message.text}</div>
+          )}
+
+          <div className="signup-link">
+            Déjà un compte ? <Link to="/login">Se connecter</Link>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
