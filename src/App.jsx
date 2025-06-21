@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./forms/login";
-import Register from "./forms/register";
+import Login from "./forms/Login";
+import Register from "./forms/Register";
 import './App.css';
 import MotDePasseOublie from "./forms/MotDePasseOublie";
 import Header from './Acceuil/Header';
@@ -9,7 +9,7 @@ import Nav_bar from './Acceuil/Nav_bar';
 import Page_Acceuil from './Acceuil/Page_Acceuil';
 import Footer from './Acceuil/Footer';
 import Sinistre from "./dashboard/sinistre";
-import Association from "./dashboard/Association";
+import Association from "./dashboard/association";
 import MeDemandes from "./dashboard/MeDemandes";
 
 

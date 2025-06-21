@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/mesDemandes.css"; 
+import "../styles/MesDemandes.css"; 
 import { FiClock, FiCheckCircle, FiXCircle } from "react-icons/fi";
 
 const MesDemandes = () => {
